@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muslim Prayer Times</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Top Banner */
+        .top-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #700574;
+            color: white;
+            padding: 10px 20px;
+        }
+        .top-banner .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .top-banner .hamburger {
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* Navigation Menu (Hamburger) */
+        .nav-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: #333;
+            width: 200px;
+            text-align: center;
+        }
+        .nav-menu a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #444;
+        }
+        .nav-menu a:hover {
+            background-color: #700574;
+        }
+
+        /* Prayer Times Section */
+        .prayer-times {
+            padding: 20px;
+            background-color: #fff;
+        }
+        .prayer-times h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .prayer-times table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .prayer-times th, .prayer-times td {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .prayer-times th {
+            background-color: #09b0e2;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #700574;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .prayer-times table {
+                font-size: 14px;
+            }
+
+            .top-banner {
+                padding: 10px;
+            }
+
+            .top-banner .hamburger {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .top-banner .hamburger.active + .nav-menu {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="logo">Prayer</div>
+        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+    </div>
+
+    <!-- Navigation Menu (Hidden on Desktop, Visible on Mobile) -->
+    <div class="nav-menu">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Prayer Times</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <!-- Prayer Times Section -->
+    <div class="prayer-times">
+        <h2>Prayer Times</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Prayer</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Fajr</td>
+                    <td>05:00 AM</td>
+                </tr>
+                <tr>
+                    <td>Dhuhr</td>
+                    <td>12:30 PM</td>
+                </tr>
+                <tr>
+                    <td>Asr</td>
+                    <td>03:45 PM</td>
+                </tr>
+                <tr>
+                    <td>Maghrib</td>
+                    <td>06:15 PM</td>
+                </tr>
+                <tr>
+                    <td>Isha</td>
+                    <td>07:45 PM</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>&copy; 2025 Prayer . All rights reserved.</p>
+    </div>
+
+    <script>
+        // Toggle the navigation menu on mobile
+        function toggleMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
