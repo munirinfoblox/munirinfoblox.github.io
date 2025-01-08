@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000">
     <title>Muslim Prayer Times</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
 
     <!-- PWA meta tags -->
     <link rel="manifest" href="manifest.json">
@@ -14,7 +15,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Muslim Prayer Times">
-    
     <style>
         /* General reset */
         * {
@@ -30,43 +30,45 @@
             background-color: #f4f4f4;
         }
 
-        /* Top Banner */
-        .top-banner {
+        .header {
+            background-color: #700575;
+            padding: 1rem;
+            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #700574;
-            color: white;
-            padding: 10px 20px;
-        }
-        .top-banner .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .top-banner .hamburger {
-            font-size: 28px;
-            cursor: pointer;
         }
 
-        /* Navigation Menu (Hamburger) */
-        .nav-menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 20px;
-            background-color: #333;
-            width: 200px;
-            text-align: center;
+        .org-name {
+            font-size: 1.5rem;
+            font-weight: bold;
         }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
         .nav-menu a {
-            display: block;
-            padding: 10px;
             color: white;
             text-decoration: none;
-            border-bottom: 1px solid #444;
+            padding: 0.5rem;
         }
+
         .nav-menu a:hover {
-            background-color: #700574;
+            background-color: #8a0691;
+            border-radius: 4px;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.5rem;
+            margin-left: auto; /* This ensures right justification */
         }
 
         /* Prayer Times Section */
@@ -74,7 +76,7 @@
             padding: 20px;
             background-color: #fff;
         }
-        .prayer-times h1, .prayer-times h2, .prayer-times p {
+        .prayer-times h1, .prayer-times h3, .prayer-times p {
             text-align: center;
             margin-bottom: 20px;
         }
@@ -94,6 +96,7 @@
 
         /* Org Message Section */
         .message {
+            font-family: Geneva, sans-serif;
             padding: 20px;
             background-color: #fff;
         }
@@ -113,29 +116,47 @@
             bottom: 0;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .prayer-times table {
-                font-size: 14px;
+            .header {
+                position: relative;
             }
 
-            .top-banner {
-                padding: 10px;
-            }
-
-            .top-banner .hamburger {
+            .hamburger {
                 display: block;
             }
 
             .nav-menu {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #700575;
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem;
             }
 
-            .top-banner .hamburger.active + .nav-menu {
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu li {
+                width: 100%;
+            }
+
+            .nav-menu a {
                 display: block;
+                padding: 1rem;
+            }
+
+            .prayer-times table {
+                font-size: 14px;
             }
         }
+
     </style>
+
     <script>
         // Register service worker
         if ('serviceWorker' in navigator) {
@@ -154,24 +175,25 @@
 <body>
 
     <!-- Top Banner -->
-    <div class="top-banner">
-        <div class="logo">Prayer</div>
-        <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
-    </div>
-
-    <!-- Navigation Menu (Hidden on Desktop, Visible on Mobile) -->
-    <div class="nav-menu">
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Prayer Times</a>
-        <a href="#">Contact</a>
-    </div>
+    <header class="header">
+        <div class="org-name">Prayer</div>
+        <button class="hamburger" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <!-- Prayer Times Section -->
     <div class="prayer-times">
     	<h1>GICC</h1>
-        <h2>Prayer Times</h2>
-        <p>The following prayer times are utmost tried to be maintained.</p>
+        <h3>January 7th, 2025</h3>
+        <p>15290 103A Ave #101, Surrey, BC V3R 7A2</p>
         <table>
             <thead>
                 <tr>
@@ -206,7 +228,7 @@
     <div class="message">
     	<h2>Message</h2>
     	<p>GICC is trying to buy another property to build a new Masjid and community centre. Please help us by making a generous</p>
-    	<button>Donation</button> 
+    	<button>Donation</button>
     </div>
 
     <!-- Footer Section -->
@@ -215,11 +237,19 @@
     </div>
 
     <script>
-        // Toggle the navigation menu on mobile
-        function toggleMenu() {
-            const menu = document.querySelector('.nav-menu');
-            menu.classList.toggle('active');
-        }
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+            }
+        });
     </script>
 
 </body>
