@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,7 +69,8 @@
             color: white;
             cursor: pointer;
             font-size: 1.5rem;
-            margin-left: auto; /* This ensures right justification */
+            margin-left: auto;
+            /* This ensures right justification */
         }
 
         /* Prayer Times Section */
@@ -76,19 +78,26 @@
             padding: 20px;
             background-color: #fff;
         }
-        .prayer-times h1, .prayer-times h3, .prayer-times p {
+
+        .prayer-times h1,
+        .prayer-times h3,
+        .prayer-times p {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .prayer-times table {
             width: 100%;
             border-collapse: collapse;
         }
-        .prayer-times th, .prayer-times td {
+
+        .prayer-times th,
+        .prayer-times td {
             text-align: center;
             padding: 10px;
             border: 1px solid #ddd;
         }
+
         .prayer-times th {
             background-color: #09b0e2;
             color: white;
@@ -100,7 +109,9 @@
             padding: 20px;
             background-color: #fff;
         }
-        .message h2, .message p {
+
+        .message h2,
+        .message p {
             text-align: center;
             margin-bottom: 20px;
         }
@@ -155,6 +166,24 @@
             }
         }
 
+        .button-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .link-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .link-button:hover {
+            background-color: #45a049;
+        }
     </style>
 
     <script>
@@ -171,7 +200,50 @@
             });
         }
     </script>
+
+    <script>
+        async function updatePrayerTimes() {
+            try {
+                // Fetch the JSON file
+                const response = await fetch('data/January.json');
+                const prayerData = await response.json();
+
+                // Get today's date in the format "DD-MMM-YY"
+                const today = new Date();
+                document.getElementById('today').textContent = today.toDateString();
+                const dateString = today.toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: '2-digit'
+                }).replace(/ /g, '-');
+
+                // Get today's prayer times
+                const todayPrayers = prayerData[dateString];
+
+                if (todayPrayers) {
+                    // Update each prayer time in the table
+                    document.getElementById('fajrTime').textContent = todayPrayers.Fajr;
+                    document.getElementById('duhrTime').textContent = todayPrayers.Duhr;
+                    document.getElementById('asrTime').textContent = todayPrayers.Asr;
+                    document.getElementById('magribTime').textContent = todayPrayers.Magrib;
+                    document.getElementById('ishaTime').textContent = todayPrayers.Isha;
+                } else {
+                    console.log('No prayer times found for today');
+                }
+            } catch (error) {
+                console.error('Error fetching prayer times:', error);
+            }
+        }
+
+        // Call the function when the page loads
+        updatePrayerTimes();
+
+        // Optional: Update times every minute
+        setInterval(updatePrayerTimes, 600000);
+    </script>
+
 </head>
+
 <body>
 
     <!-- Top Banner -->
@@ -191,8 +263,8 @@
 
     <!-- Prayer Times Section -->
     <div class="prayer-times">
-    	<h1>GICC</h1>
-        <h3>January 7th, 2025</h3>
+        <h1>GICC</h1>
+        <h3 id="today">January 1st, 2025</h3>
         <p>15290 103A Ave #101, Surrey, BC V3R 7A2</p>
         <table>
             <thead>
@@ -204,36 +276,38 @@
             <tbody>
                 <tr>
                     <td>Fajr</td>
-                    <td>05:00 AM</td>
+                    <td id="fajrTime">--:--</td>
                 </tr>
                 <tr>
                     <td>Dhuhr</td>
-                    <td>12:30 PM</td>
+                    <td id="duhrTime">--:--</td>
                 </tr>
                 <tr>
                     <td>Asr</td>
-                    <td>03:45 PM</td>
+                    <td id="asrTime">--:--</td>
                 </tr>
                 <tr>
                     <td>Maghrib</td>
-                    <td>06:15 PM</td>
+                    <td id="magribTime">--:--</td>
                 </tr>
                 <tr>
                     <td>Isha</td>
-                    <td>07:45 PM</td>
+                    <td id="ishaTime">--:--</td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="message">
-    	<h2>Message</h2>
-    	<p>GICC is trying to buy another property to build a new Masjid and community centre. Please help us by making a generous</p>
-    	<button>Donation</button>
+        <h2>Message</h2>
+        <p>GICC is trying to buy another property to build a new Masjid and community centre. Please help.</p>
+        <div class="button-container">
+            <a href="https://surreyislamiccenter.com/donate/" target="_blank" class="link-button">Donate</a>
+        </div>
     </div>
 
     <!-- Footer Section -->
     <div class="footer">
-        <p>&copy; 2025 Prayer . All rights reserved.</p>
+        <p>&copy; 2025 Prayer Times. All rights reserved.</p>
     </div>
 
     <script>
@@ -253,4 +327,5 @@
     </script>
 
 </body>
+
 </html>
